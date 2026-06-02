@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon Clock</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --clock-bg: #1f2833;
+      --neon-cyan: #66fcf1;
+      --neon-blue: #45a29e;
+      --neon-pink: #ff007f;
+      --glow: 0 0 15px rgba(102, 252, 241, 0.6);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    .container { text-align: center; }
+    
+    .clock {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #2a3b47 0%, var(--clock-bg) 80%);
+      box-shadow: 0 0 25px rgba(69, 162, 158, 0.4), inset 0 0 20px rgba(0,0,0,0.6);
+      position: relative;
+      margin: 0 auto 25px;
+      border: 3px solid var(--neon-blue);
+      animation: pulse 4s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 25px rgba(69, 162, 158, 0.4), inset 0 0 20px rgba(0,0,0,0.6); }
+      50% { box-shadow: 0 0 35px rgba(102, 252, 241, 0.6), inset 0 0 20px rgba(0,0,0,0.6); }
+    }
+    
+    .hand {
+      position: absolute;
+      bottom: 50%; left: 50%;
+      transform-origin: bottom center;
+      border-radius: 10px;
+      z-index: 5;
+    }
+    .hand.hour {
+      width: 8px; height: 70px; background: #fff;
+      box-shadow: 0 0 8px rgba(255,255,255,0.5);
+    }
+    .hand.minute {
+      width: 6px; height: 100px; background: var(--neon-blue);
+      box-shadow: 0 0 12px var(--neon-blue);
+    }
+    .hand.second {
+      width: 3px; height: 115px; background: var(--neon-pink);
+      box-shadow: 0 0 12px var(--neon-pink);
+    }
+    
+    .center-dot {
+      position: absolute; top: 50%; left: 50%;
+      width: 14px; height: 14px;
+      background: var(--neon-cyan);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px var(--neon-cyan);
+      z-index: 10;
+    }
+    
+    .marker {
+      position: absolute;
+      width: 3px; height: 10px;
+      background: var(--neon-blue);
+      left: 50%; top: 10px;
+      transform-origin: 50% 130px;
+      opacity: 0.5;
+    }
+    .marker.major { height: 16px; width: 5px; opacity: 1; background: #fff; box-shadow: 0 0 5px #fff; }
+
+    .digital {
+      color: var(--neon-cyan);
+      font-size: 2.8rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      font-variant-numeric: tabular-nums;
+      text-shadow: var(--glow);
+      margin-bottom: 6px;
+    }
+    .date {
+      color: #8892b0;
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="clock" id="clock-face">
+      <div class="hand hour" id="hour"></div>
+      <div class="hand minute" id="minute"></div>
+      <div class="hand second" id="second"></div>
+      <div class="center-dot"></div>
+    </div>
+    <div class="digital" id="digital">00:00:00</div>
+    <div class="date" id="date">Loading...</div>
+  </div>
+
+  <script>
+    // 生成60个刻度
+    const face = document.getElementById('clock-face');
+    for(let i=0; i<60; i++){
+      const m = document.createElement('div');
+      m.className = i % 5 === 0 ? 'marker major' : 'marker';
+      m.style.transform = `translateX(-50%) rotate(${i*6}deg)`;
+      face.appendChild(m);
+    }
+
+    const hHand = document.getElementById('hour');
+    const mHand = document.getElementById('minute');
+    const sHand = document.getElementById('second');
+    const digEl = document.getElementById('digital');
+    const dateEl = document.getElementById('date');
+    const pad = n => n.toString().padStart(2, '0');
+    const weekDays = ['周日','周一','周二','周三','周四','周五','周六'];
+
+    function tick() {
+      const now = new Date();
+      const ms = now.getMilliseconds();
+      const sec = now.getSeconds() + ms / 1000;
+      const min = now.getMinutes() + sec / 60;
+      const hr = now.getHours() % 12 + min / 60;
+
+      hHand.style.transform = `translateX(-50%) rotate(${hr * 30}deg)`;
+      mHand.style.transform = `translateX(-50%) rotate(${min * 6}deg)`;
+      sHand.style.transform = `translateX(-50%) rotate(${sec * 6}deg)`;
+
+      digEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      dateEl.textContent = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${weekDays[now.getDay()]}`;
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
