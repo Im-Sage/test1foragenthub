@@ -1,0 +1,133 @@
+/* =========================================
+   1. CSS 变量与设计令牌
+   ========================================= */
+:root {
+  --color-primary: #0056b3;
+  --color-text: #1a1a1a;
+  --color-bg: #ffffff;
+  --color-surface: #f8f9fa;
+  --spacing-unit: 1rem;
+  --font-base: 16px;
+  --max-width: 1200px;
+  --transition-base: 0.2s ease-in-out;
+  --radius-sm: 0.375rem;
+}
+
+/* =========================================
+   2. 基础重置与排版
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--font-base);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video, svg { max-width: 100%; height: auto; display: block; }
+
+/* =========================================
+   3. 语义布局与 BEM 组件
+   ========================================= */
+.site-header {
+  padding: var(--spacing-unit) 2rem;
+  background: var(--color-bg);
+  border-block-end: 1px solid #eee;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: calc(var(--spacing-unit) * 1.5);
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list__link {
+  text-decoration: none;
+  color: var(--color-text);
+  padding-block: 0.5rem;
+  border-block-end: 2px solid transparent;
+  transition: border-color var(--transition-base);
+}
+
+.nav-list__link:hover,
+.nav-list__link:focus-visible {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+main {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+.hero { text-align: center; margin-block-end: 4rem; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-block: 0 1rem; }
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-block-end: 4rem;
+}
+
+.feature-card {
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.site-footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  text-align: center;
+  background: #f1f1f1;
+}
+
+/* =========================================
+   4. 性能与动画优化
+   ========================================= */
+.animate-on-scroll {
+  will-change: transform, opacity;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* 避免主线程阻塞的硬件加速提示 */
+@media (prefers-reduced-motion: no-preference) {
+  .animate-on-scroll { transform: translateY(10px); opacity: 0; }
+  .animate-on-scroll.is-visible { transform: translateY(0); opacity: 1; }
+}
+
+/* =========================================
+   5. 响应式与打印适配
+   ========================================= */
+@media (max-width: 768px) {
+  .main-nav { flex-direction: column; gap: 1rem; }
+  .nav-list { flex-wrap: wrap; justify-content: center; }
+  main { padding-inline: 1rem; }
+}
+
+@media print {
+  .site-header, .site-footer, .nav-list { display: none; }
+  body { color: #000; background: #fff; }
+  a::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #555; }
+}
