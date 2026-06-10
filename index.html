@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态闪烁灯光引擎</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #050505; overflow: hidden; font-family: system-ui, sans-serif; }
+    canvas { display: block; }
+    #ui {
+      position: fixed; top: 16px; left: 16px; color: #aaa; font-size: 13px;
+      background: rgba(0,0,0,0.6); padding: 10px 14px; border-radius: 8px;
+      backdrop-filter: blur(4px); pointer-events: none; user-select: none;
+    }
+    #ui span { color: #4fc3f7; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <span>🖱️ 点击</span> 添加灯光 | <span>🔤 空格</span> 暂停 | <span>➕➖</span> 调速 | <span>C</span> 清空
+  </div>
+  <canvas id="canvas"></canvas>
+  <script src="js/light-engine.js"></script>
+</body>
+</html>

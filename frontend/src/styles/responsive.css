@@ -1,0 +1,23 @@
+/* 统一响应式断点与容器查询基础 */
+:root {
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+}
+
+/* 容器查询启用 */
+.container-query {
+  container-type: inline-size;
+  container-name: layout;
+}
+
+@container layout (min-width: 40rem) {
+  .responsive-card { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 触控设备 hover 降级 */
+@media (hover: none) and (pointer: coarse) {
+  .hover-effect { transition: none; }
+  .hover-effect:active { opacity: 0.8; }
+}
