@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-rational-order"
+  ],
+  "rules": {
+    "selector-max-specificity": "0,3,1",
+    "declaration-block-no-duplicate-properties": true,
+    "property-no-vendor-prefix": true,
+    "color-no-hex": true,
+    "unit-allowed-list": ["em", "rem", "%", "s", "px", "deg", "vw", "vh"],
+    "max-empty-lines": 1,
+    "no-descending-specificity": true,
+    "declaration-no-important": true
+  }
+}

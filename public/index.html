@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="符合Web标准的前端模板示例">
+  <meta name="theme-color" content="#0056b3">
+  <title>标准语义化与高性能页面</title>
+  <!-- 资源预加载与连接优化 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap">
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- 关键首屏样式内联 -->
+  <style>
+    :root { --primary: #0056b3; --bg: #ffffff; --text: #1a1a1a; }
+    body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="main-nav" aria-label="主导航">
+      <a href="/" class="logo" aria-label="返回首页">Brand</a>
+      <ul class="nav-list">
+        <li><a href="/products">产品</a></li>
+        <li><a href="/about">关于</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">高性能语义化页面示例</h1>
+      <p>遵循 W3C 标准、无障碍指南与核心网页指标最佳实践。</p>
+    </section>
+
+    <section class="features" aria-labelledby="features-title">
+      <h2 id="features-title">核心特性</h2>
+      <article class="feature-card">
+        <h3>语义化结构</h3>
+        <p>正确使用 HTML5 区域标签，提升 SEO 与屏幕阅读器兼容性。</p>
+      </article>
+      <article class="feature-card">
+        <h3>渲染性能优化</h3>
+        <p>避免布局抖动，合理使用懒加载与异步解码。</p>
+      </article>
+    </section>
+
+    <section class="content" aria-labelledby="content-title">
+      <h2 id="content-title">媒体加载优化</h2>
+      <figure>
+        <img 
+          src="/images/demo.jpg" 
+          alt="演示图片说明" 
+          width="800" 
+          height="600" 
+          loading="lazy" 
+          decoding="async"
+        >
+        <figcaption>示例图片说明，已包含显式宽高与懒加载属性。</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <time id="year" datetime=""></time> AgentHub. All rights reserved.</p>
+  </footer>
+
+  <!-- 脚本延迟加载，避免阻塞解析 -->
+  <script src="/scripts/main.js" defer></script>
+</body>
+</html>
